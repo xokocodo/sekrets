@@ -314,10 +314,10 @@ class Sekrets
   end
 
 #
-  module Blowfish
+  module AES
     def cipher(mode, key, data)
-      cipher = OpenSSL::Cipher.new('bf-cbc').send(mode)
-      cipher.key = Digest::SHA256.digest(key.to_s).slice(0,16)
+      cipher = OpenSSL::Cipher.new('aes-256-cfb').send(mode)
+      cipher.key = Digest::SHA256.digest(key.to_s).slice(0,32)
       cipher.update(data) << cipher.final
     end
 
@@ -340,7 +340,7 @@ class Sekrets
     extend(self)
   end
 
-  extend(Blowfish)
+  extend(AES)
 end
 
 
